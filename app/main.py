@@ -3,7 +3,10 @@ from typing import Union
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from wiki_parser import WikiParser
+from scripts.wiki_parser import WikiParser
+from scripts.db_reader import DBReader
+from scripts.db_writer import DBWriter
+
 
 app = FastAPI()
 
@@ -19,7 +22,9 @@ def read_root():
 
 @app.get("/items")
 def get_items():
-    return WikiParser.parse_items()
+    if DBReader.read_items() == None:
+      DBWriter.write_items()
+    return DBReader.read_items()
 
 # @app.get("/items/{item_id}")
 # def read_item(item_id: int, q: Union[str, None] = None):

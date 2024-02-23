@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 
 class WikiParser:
+  
   @staticmethod
   def parse_items():
     unparsed_html = requests.get("https://bindingofisaacrebirth.fandom.com/wiki/Items").content
@@ -27,5 +28,6 @@ class WikiParser:
         else:
           print("error " + str(i))
       items.append(item)
-    
     return items
+  
+  
