@@ -11,4 +11,4 @@ class DBWriter:
       file.write(json.dumps(items))
     print(colored(f"{len(items)} items written to db/items.json", "green"))
   
-DBWriter.write_items()
+#DBWriter.write_items()

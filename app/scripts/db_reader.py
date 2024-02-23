@@ -11,4 +11,4 @@ class DBReader:
       items = file.read()
     return json.loads(items)
   
-print(DBReader.read_items())
+#print(DBReader.read_items())
