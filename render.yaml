@@ -1,9 +1,9 @@
 services:
   # A Docker web service
   - type: web
-    name: fastapi-example
+    name: isaac-fastapi
     runtime: python
     plan: free
-    autoDeploy: false
+    autoDeploy: true
     buildCommand: pip install -r requirements.txt
     startCommand: cd app && uvicorn main:app --host 0.0.0.0 --port $PORT
