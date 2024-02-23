@@ -108,3 +108,6 @@ venv.bak/
 .DS_Store
 
 tempCodeRunnerFile.py
+
+# content of /db folder contains many json files
+db/*.json

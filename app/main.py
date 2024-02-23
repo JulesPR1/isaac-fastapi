@@ -3,9 +3,9 @@ from typing import Union
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from scripts.wiki_parser import WikiParser
-from scripts.db_reader import DBReader
-from scripts.db_writer import DBWriter
+from app.scripts.wiki_parser import WikiParser
+from app.scripts.db_reader import DBReader
+from app.scripts.db_writer import DBWriter
 
 
 app = FastAPI()
