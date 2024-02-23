@@ -109,5 +109,5 @@ venv.bak/
 
 tempCodeRunnerFile.py
 
-# content of /db folder contains many json files
-db/*.json
+#db files
+app/db/*.json

@@ -4,7 +4,7 @@ import json
 class DBReader:
   @staticmethod
   def read_items():
-    file_path = "db/items.json"
+    file_path = path.join(path.dirname(__file__), "../db/items.json")
     if not path.exists(file_path):
       return None
     with open(file_path, "r") as file:
