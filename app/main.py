@@ -26,6 +26,12 @@ def get_items():
       DBWriter.write_items()
     return DBReader.read_items()
 
+@app.get("/characters")
+def get_characters():
+  if DBReader.read_characters() == None:
+    DBWriter.write_characters()
+  return DBReader.read_characters()
+
 # @app.get("/items/{item_id}")
 # def read_item(item_id: int, q: Union[str, None] = None):
 #     return {"item_id": item_id, "q": q}

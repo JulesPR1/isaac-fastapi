@@ -13,3 +13,13 @@ class DBReader:
     with open(db_path, "r") as file:
       items = file.read()
     return json.loads(items)
+  
+  def read_characters():
+    db_path = path.join(path.dirname(__file__), "../db/characters.json")
+    
+    if not path.exists(db_path):
+      print("No characters found in db/characters.json")
+      return None
+    with open(db_path, "r") as file:
+      characters = file.read()
+    return json.loads(characters)
