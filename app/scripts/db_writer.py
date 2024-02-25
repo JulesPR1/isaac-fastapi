@@ -14,7 +14,7 @@ class DBWriter:
     file_path = path.join(DBWriter.__get_db_path(), file_name)
     with open(file_path, "w") as file:
       file.write(json.dumps(data))
-    print(colored(f"{len(data)} items written to {file_name}", "green"))
+    print(colored(f"{len(data)} entries written to {file_name}", "green"))
 
   @staticmethod
   def write_items():
