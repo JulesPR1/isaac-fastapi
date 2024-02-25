@@ -13,5 +13,3 @@ class DBReader:
     with open(db_path, "r") as file:
       items = file.read()
     return json.loads(items)
-  
-print(DBReader.read_items())
