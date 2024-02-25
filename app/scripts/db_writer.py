@@ -6,22 +6,22 @@ from os import path
 class DBWriter:
   
   @staticmethod
+  def __get_db_path():
+    return path.join(path.dirname(__file__), "../db")
+  
+  @staticmethod
+  def _write_to_file(data, file_name):
+    file_path = path.join(DBWriter.__get_db_path(), file_name)
+    with open(file_path, "w") as file:
+      file.write(json.dumps(data))
+    print(colored(f"{len(data)} items written to {file_name}", "green"))
+
+  @staticmethod
   def write_items():
     items = WikiParser.parse_items()
-    
-    db_path = path.join(path.dirname(__file__), "../db/items.json")
-    
-    with open(db_path, "w") as file:
-      file.write(json.dumps(items))
-      
-    print(colored(f"{len(items)} items written to db/items.json", "green"))
-  
+    DBWriter._write_to_file(items, "items.json")
+
+  @staticmethod
   def write_characters():
     characters = WikiParser.parse_characters()
-    
-    db_path = path.join(path.dirname(__file__), "../db/characters.json")
-    
-    with open(db_path, "w") as file:
-      file.write(json.dumps(characters))
-      
-    print(colored(f"{len(characters)} characters written to db/characters.json", "green"))
+    DBWriter._write_to_file(characters, "characters.json")

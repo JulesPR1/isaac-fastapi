@@ -15,22 +15,25 @@ class Item(BaseModel):
     price: float
     is_offer: Union[bool, None] = None
 
-
 @app.get("/")
 def read_root():
-    return {"Welcome to the WikiParser API": "Use /items to get the list of items"}
+    return {"Welcome to the WikiParser API !"}
 
 @app.get("/items")
 def get_items():
-    if DBReader.read_items() == None:
-      DBWriter.write_items()
-    return DBReader.read_items()
+    items_data = DBReader.read_items()
+    if items_data is None:
+        DBWriter.write_items()
+        items_data = DBReader.read_items()
+    return items_data
 
 @app.get("/characters")
 def get_characters():
-  if DBReader.read_characters() == None:
-    DBWriter.write_characters()
-  return DBReader.read_characters()
+    characters_data = DBReader.read_characters()
+    if characters_data is None:
+        DBWriter.write_characters()
+        characters_data = DBReader.read_characters()
+    return characters_data
 
 # @app.get("/items/{item_id}")
 # def read_item(item_id: int, q: Union[str, None] = None):
