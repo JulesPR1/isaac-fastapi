@@ -21,7 +21,7 @@ class WikiParser:
             span.replace_with('')
           item[datas[i]] = item_info.text.replace('\n', '')
         elif i == 2:
-          if len(item_info.find_all("div")) > 0:
+          if len(item_info.find_all("div")) > 0: # if the item is active (because only active items have a div in the icon column)
             item[datas[i]] = item_info.find("img")['data-src']
             item["is_active"] = True
           else:
