@@ -21,7 +21,12 @@ class WikiParser:
             span.replace_with('')
           item[datas[i]] = item_info.text.replace('\n', '')
         elif i == 2:
-          item[datas[i]] = item_info.find("img")['data-src']
+          if len(item_info.find_all("div")) > 0:
+            item[datas[i]] = item_info.find("img")['data-src']
+            item["is_active"] = True
+          else:
+            item[datas[i]] = item_info.find("img")['data-src']
+            item["is_active"] = False
         elif i in [3, 4, 5]:
           item[datas[i]] = item_info.text.replace('\n', '')
         else:
@@ -66,7 +71,7 @@ class WikiParser:
       if not header:
         header = tr.find("th").find("a").text
 
-      header = header.strip()
+      header = header.strip().lower()
       tr_tds = tr.find_all("td")
          
       if len(tr_tds) == 0:
@@ -74,12 +79,12 @@ class WikiParser:
       
       characters = WikiParser.__reorder_characters_woth_subcharacters(characters)
       
+      # skip one column for the 7 and 8th row after the 17th column (due to the subcharacters)
       for k, character in enumerate(characters):
-        if k >= 17 and i in [7,8]:
+        if k >= 17 and i in [7,8]: 
           td = tr_tds[k-1]
         else: 
           td = tr_tds[k] 
-       
         
         if i == 1:
           character[header] = WikiParser.__get_life_dict(td.find_all("img"))
@@ -98,7 +103,7 @@ class WikiParser:
       if not header:
         header = tr.find("th").find("a").text
 
-      header = header.strip()
+      header = header.strip().lower()
       tr_tds = tr.find_all("td")
          
       if len(tr_tds) == 0:
@@ -108,9 +113,7 @@ class WikiParser:
         td = tr_tds[k]
         character["achievements"].append({"condition": header, "unlockable": td.find("img")["alt"]}) 
 
-      
     return data
-  
 
   # private methods
   @staticmethod

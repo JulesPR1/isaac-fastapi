@@ -20,11 +20,25 @@ def read_root():
     return {"Welcome to the WikiParser API !"}
 
 @app.get("/items")
-def get_items():
+def get_items(order_by: str = None, quality: str = None, item_type: str = None, including: str = None):
     items_data = DBReader.read_items()
     if items_data is None:
         DBWriter.write_items()
         items_data = DBReader.read_items()
+    
+    if order_by is not None and order_by in ["id", "name", "quality"]:
+      items_data = sorted(items_data, key=lambda x: int(x[order_by]) if order_by == "id" else x[order_by])
+    
+    if item_type is not None and item_type in ["active", "passive"]:
+      active = item_type == "active"
+      items_data = [item for item in items_data if item['is_active'] == active]
+      
+    if including is not None:
+      items_data = [item for item in items_data if including in item['name'] + item['quote'] + item['description']]
+       
+    if quality is not None:
+      items_data = [item for item in items_data if item['quality'] == quality]
+      
     return items_data
 
 @app.get("/characters")
@@ -34,6 +48,16 @@ def get_characters():
         DBWriter.write_characters()
         characters_data = DBReader.read_characters()
     return characters_data
+  
+@app.put("/reload-db")
+def reload_db():
+  DBWriter.write_items()
+  DBWriter.write_characters()
+  return {"DB reloaded"}
+
+@app.get("/status")
+def status():
+  return {"status": "OK"}
 
 # @app.get("/items/{item_id}")
 # def read_item(item_id: int, q: Union[str, None] = None):
