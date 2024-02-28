@@ -22,8 +22,8 @@ class DBWriter:
     items = WikiParser.parse_items()
     
     for item in items:
-      img_path = DBWriter.__download_img(img_storage_path="items", img=item["img"], img_name=item["name"].replace(" ", "_").replace("/", "_").lower(), force=force)
-      item["img"] = img_path
+      img_name = DBWriter.__download_img(img_storage_path="items", img=item["img"], img_name=item["name"].replace(" ", "_").replace("/", "_").lower(), force=force)
+      item["img"] = f"item_images/{img_name}"
       
     DBWriter._write_to_file(items, "items.json")
     
@@ -33,8 +33,8 @@ class DBWriter:
     characters = WikiParser.parse_characters()
     
     for character in characters:
-      img_path = DBWriter.__download_img(img_storage_path="characters", img=character["img"], img_name=character["name"].replace(" ", "_").lower(), force=force)
-      character["img"] = img_path
+      img_name = DBWriter.__download_img(img_storage_path="characters", img=character["img"], img_name=character["name"].replace(" ", "_").lower(), force=force)
+      character["img"] = f"character_images/{img_name}"
       
     DBWriter._write_to_file(characters, "characters.json")
     
@@ -63,6 +63,6 @@ class DBWriter:
     if not path.exists(img_path) or force:
       with open(img_path, 'wb') as f:
         f.write(requests.get(img).content)
-      print(colored(f"[DOWNLOADED] {img_name if img_name is not None else img}\n------------", "green"))
+      print(colored(f"[IMAGE DOWNLOADED] {img_name if img_name is not None else img}\n----------------", "green"))
     
     return img_name
