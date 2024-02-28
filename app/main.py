@@ -10,7 +10,6 @@ import datetime
 
 from os import path
 
-from app.scripts.wiki_parser import WikiParser
 from app.db.db_reader import DBReader
 from app.db.db_writer import DBWriter
 
@@ -23,7 +22,7 @@ app.mount("/character_images", StaticFiles(directory=path.join(path.dirname(__fi
 
 @app.get("/")
 def read_root():
-  return {"Welcome to the WikiParser API !"}
+  return {"Welcome to the Isaac API !"}
 
 
 @app.get("/items")

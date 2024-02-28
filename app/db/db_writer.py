@@ -3,7 +3,9 @@ import requests
 from termcolor import colored
 from os import path
 
-from app.scripts.wiki_parser import WikiParser
+from app.scripts.items_parser import ItemsParser
+from app.scripts.trinkets_parser import TrinketsParser
+from app.scripts.characters_parser import CharactersParser
 
 class DBWriter:
   
@@ -13,12 +15,12 @@ class DBWriter:
     
     with open(file_path, "w") as file:
       file.write(json.dumps(data))
-    print(colored(f"{len(data)} entries written to {file_name}", "green"))
+    print(colored(f"✅ {len(data)} entries written to {file_name}", "green"))
     
 
   @staticmethod
   def write_items(force: bool = False):
-    items = WikiParser.parse_items()
+    items = ItemsParser.parse_items()
     
     for item in items:
       img_name = DBWriter.__download_img(img_storage_path="items", img=item["img"], img_name=item["name"].replace(" ", "_").replace("/", "_").lower(), force=force)
@@ -28,7 +30,7 @@ class DBWriter:
     
   @staticmethod
   def write_trinkets(force: bool = False):
-    trinkets = WikiParser.parse_trinkets()
+    trinkets = TrinketsParser.parse_trinkets()
     
     for trinket in trinkets:
       img_name = DBWriter.__download_img(img_storage_path="trinkets", img=trinket["img"], img_name=trinket["name"].replace(" ", "_").replace("/", "_").lower(), force=force)
@@ -39,7 +41,7 @@ class DBWriter:
     
   @staticmethod
   def write_characters(force: bool = False):
-    characters = WikiParser.parse_characters()
+    characters = CharactersParser.parse_characters()
     
     for character in characters:
       img_name = DBWriter.__download_img(img_storage_path="characters", img=character["img"], img_name=character["name"].replace(" ", "_").lower(), force=force)
