@@ -16,6 +16,7 @@ from app.db.db_writer import DBWriter
 
 router = APIRouter()
 app = FastAPI()
+
 app.mount("/item_images", StaticFiles(directory=path.join(path.dirname(__file__), f"storage/items")), name="item_images")
 app.mount("/character_images", StaticFiles(directory=path.join(path.dirname(__file__), f"storage/characters")), name="character_images")
 

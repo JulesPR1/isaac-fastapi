@@ -18,7 +18,7 @@ class DBWriter:
 
   @staticmethod
   def __format_item_logo_path(item):
-    return f"{item['name'].lower().replace("/", " ").replace(" ", "_")}_{item['id']}_logo.png"
+    return f"{item['name'].lower().replace('/', ' ').replace(' ', '_')}_{item['id']}_logo.png"
   
   @staticmethod
   def _write_to_file(data, file_name):
