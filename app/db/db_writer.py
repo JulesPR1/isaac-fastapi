@@ -26,6 +26,16 @@ class DBWriter:
       
     DBWriter._write_to_file(items, "items.json")
     
+  @staticmethod
+  def write_trinkets(force: bool = False):
+    trinkets = WikiParser.parse_trinkets()
+    
+    for trinket in trinkets:
+      img_name = DBWriter.__download_img(img_storage_path="trinkets", img=trinket["img"], img_name=trinket["name"].replace(" ", "_").replace("/", "_").lower(), force=force)
+      trinket["img"] = f"trinket_images/{img_name}"
+      
+    DBWriter._write_to_file(trinkets, "trinkets.json")
+    
     
   @staticmethod
   def write_characters(force: bool = False):

@@ -12,3 +12,8 @@ if [ ! -d "app/storage/items" ]; then
     mkdir -p app/storage/items
     echo "Created app/storage/items folder"
 fi
+
+if [ ! -d "app/storage/trinkets" ]; then
+    mkdir -p app/storage/items
+    echo "Created app/storage/items folder"
+fi

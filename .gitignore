@@ -113,3 +113,4 @@ tempCodeRunnerFile.py
 app/db/json/*.json
 app/storage/items/*.png
 app/storage/characters/*.png
+app/storage/trinkets/*.png
