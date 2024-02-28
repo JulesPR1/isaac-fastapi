@@ -2,7 +2,6 @@ import json
 import requests
 from termcolor import colored
 from os import path
-import shortuuid
 
 from app.scripts.wiki_parser import WikiParser
 
@@ -50,19 +49,20 @@ class DBWriter:
   
 
   @staticmethod
-  def __format_img_path(img_name):
-    uuid = shortuuid.uuid()
-    return f"{img_name.lower().replace('/', ' ').replace(' ', '_')}_{uuid}.png"
+  def __format_img_path(img_name: str):
+    return f"{img_name.lower().replace('/', ' ').replace(' ', '_')}.png"
   
   
   @staticmethod
-  def __download_img(img_storage_path, img, img_name: str = None, force: bool = False):
+  def __download_img(img_storage_path, img, img_name, force: bool = False):
     img_name = DBWriter.__format_img_path(img_name)
     img_path = path.join(DBWriter.__get_storage_path(img_storage_path), img_name)
     
     if not path.exists(img_path) or force:
       with open(img_path, 'wb') as f:
         f.write(requests.get(img).content)
-      print(colored(f"[IMAGE DOWNLOADED] {img_name if img_name is not None else img}\n----------------", "green"))
+      print(colored(f"[IMAGE DOWNLOADED] {img_name}\n------------------", "green"))
+    else:
+      print(colored(f"[IMAGE ALREADY EXISTS] {img_name}\n------------------", "yellow"))
     
     return img_name
