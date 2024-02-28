@@ -12,11 +12,6 @@ class DBReader:
     return json.loads(data)
 
   @staticmethod
-  def read_items():
-    db_path = path.join(path.dirname(__file__), "../db/items.json")
-    return DBReader._read_json(db_path)
-
-  @staticmethod
-  def read_characters():
-    db_path = path.join(path.dirname(__file__), "../db/characters.json")
+  def read(file_name):
+    db_path = path.join(path.dirname(__file__), f"json/{file_name}.json")
     return DBReader._read_json(db_path)

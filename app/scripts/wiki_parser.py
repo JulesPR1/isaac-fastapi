@@ -169,4 +169,3 @@ class WikiParser:
           data.append(sub_character)
 
     return data
-  
