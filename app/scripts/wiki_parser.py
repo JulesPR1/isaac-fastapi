@@ -9,7 +9,7 @@ class WikiParser:
     item_rows = soup.find_all("tr", class_="row-collectible")
     
     items = []
-    datas = ["name", "id", "icon", "quote", "description", "quality"]
+    datas = ["name", "id", "img", "quote", "description", "quality"]
     
     for item_row in item_rows:
       item = {}
@@ -21,7 +21,7 @@ class WikiParser:
             span.replace_with('')
           item[datas[i]] = item_info.text.replace('\n', '')
         elif i == 2:
-          if len(item_info.find_all("div")) > 0: # if the item is active (because only active items have a div in the icon column)
+          if len(item_info.find_all("div")) > 0: # if the item is active (because only active items have a div in the img column)
             item[datas[i]] = item_info.find("img")['data-src']
             item["is_active"] = True
           else:
@@ -33,6 +33,7 @@ class WikiParser:
           print("error " + str(i))
       items.append(item)
     return items
+  
   
   # TODO finish this
   @staticmethod
@@ -48,14 +49,15 @@ class WikiParser:
     
     return data
   
+  
   @staticmethod
   def parse_characters():
     soup = WikiParser.__get_parsed_html(f"https://bindingofisaacrebirth.fandom.com/wiki/Characters#Tainted_Characters")
     table_body = soup.find_all("table", class_="wikitable")[0].find("tbody")    
 
     
-    characters = WikiParser.__init_characters(table_body, False)
-    sub_characters = WikiParser.__init_characters(table_body, True)[::-1] # reversing subcharacters for assignement
+    characters = WikiParser.__init_characters(table_body, subcharacter=False)
+    sub_characters = WikiParser.__init_characters(table_body, subcharacter=True)[::-1] # reversing subcharacters for assignement
     
     data = characters
 
@@ -114,6 +116,7 @@ class WikiParser:
         character["achievements"].append({"condition": header, "unlockable": td.find("img")["alt"]}) 
 
     return data
+  
 
   # private methods
   @staticmethod
@@ -129,13 +132,18 @@ class WikiParser:
     
     return item_name_formatted
   
+  
   @staticmethod
   def __get_parsed_html(url):
     url = url
-    raw_html = requests.get(url).content
+    headers = {
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"
+    }
+    raw_html = requests.get(url, headers=headers).content
     soup = BeautifulSoup(raw_html, "html.parser")
     
     return soup
+  
   
   @staticmethod
   def __get_life_dict(imgs):
@@ -148,6 +156,7 @@ class WikiParser:
       
     return data
   
+  
   @staticmethod
   def __init_characters(table_body, subcharacter: bool):
     data = []
@@ -155,9 +164,18 @@ class WikiParser:
       character = {}
       name = th.find_all("a")[-1].text    
       character["name"] = name
+      for span in th.findAll('span'):
+        span.replace_with('')
+      if th.find("img"):
+        if th.find("img").has_attr("data-src"):
+          character["img"] = th.find("img")["data-src"]
+        else:
+          character["img"] = th.find("img")["src"]
       data.append(character)
     return data
+  
 
+  @staticmethod
   def __reorder_characters_woth_subcharacters(characters):
     data = []
     

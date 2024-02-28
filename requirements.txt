@@ -2,3 +2,4 @@ fastapi[all]
 bs4
 requests
 termcolor
+shortuuid

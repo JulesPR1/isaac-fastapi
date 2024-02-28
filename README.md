@@ -42,7 +42,7 @@ Returns a list of all items in the game
 {
   "name":"Eye of Belial",
   "id":"462",
-  "icon":"https://static.wikia.nocookie.net/bindingofisaacre_gamepedia/images/1/1f/Collectible_Eye_of_Belial_icon.png/revision/latest?cb=20210822015805",
+  "img":"https://static.wikia.nocookie.net/bindingofisaacre_gamepedia/images/1/1f/Collectible_Eye_of_Belial_img.png/revision/latest?cb=20210822015805",
   "quote":"Possessed tears!",
   "description":"Grants piercing tears. After piercing one enemy, tears start homing and deal double damage.",
   "quality":"3"
